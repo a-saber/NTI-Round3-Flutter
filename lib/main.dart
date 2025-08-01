@@ -54,19 +54,26 @@ class HomeView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children:
-          [
-            Text('Products', style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 25
-            ),),
-            SizedBox(height: 20,),
-            
-            ProductItemBuilder()
-
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children:
+            [
+              Text('Products', style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25
+              ),),
+              SizedBox(height: 20,),
+              SizedBox(
+                height: 200,
+                child: ListView.builder(
+                  itemBuilder: (context, int index)=> ProductItemBuilder(),
+                  itemCount: 10,
+                ),
+              ),
+              SizedBox(height: 800,),
+            ],
+          ),
         ),
       )
     );
@@ -79,6 +86,8 @@ class ProductItemBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
+      margin: EdgeInsets.only(bottom: 10),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.grey.withAlpha(100),
