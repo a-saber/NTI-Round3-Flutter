@@ -1,0 +1,158 @@
+import 'package:flutter/material.dart';
+
+void main()
+{
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget
+{
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomeView(),
+    );
+  }
+}
+
+class HomeView extends StatelessWidget {
+  const HomeView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        leading: Icon(
+          Icons.arrow_back_ios,
+          color: Colors.red,
+          size: 30,
+        ),
+        title: Text('Home',
+          style: TextStyle(
+            color: Colors.blue,
+            fontSize: 35,
+            fontWeight: FontWeight.w100,
+          ),
+        ),
+        actions: 
+        [
+          Text('Add'),
+          // SizedBox(width: 10,),
+          Padding(
+            padding: const EdgeInsets.only(
+              right: 10,
+              left: 10,
+            ),
+            child: Icon(Icons.person),
+          ),
+
+
+        ],
+
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children:
+          [
+            Text('Products', style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 25
+            ),),
+            SizedBox(height: 20,),
+            
+            ProductItemBuilder()
+
+          ],
+        ),
+      )
+    );
+  }
+}
+
+class ProductItemBuilder extends StatelessWidget {
+  const ProductItemBuilder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: Row(
+        children:
+        [
+          Container(
+            height: 100, width: 100,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: NetworkImage('https://septemberfarmcheese.b-cdn.net/wp-content/uploads/Blogs/Homemade-Pizza/homemade-pizza-monterey-jack-cheese.jpg'),
+                fit: BoxFit.cover
+              )
+            ),
+          ),
+          SizedBox(width: 20,),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children:
+              [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children:
+                  [
+                    Text('Product Name'),
+                    Text('50\$'),
+                  ],
+                ),
+                Text('Description'),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+
+class DefaultRow extends StatelessWidget {
+  const DefaultRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children:
+      [
+
+        for(int i=0;i<3;i++)
+          Container(
+            height: 100,
+            width: 100,
+            decoration: BoxDecoration(
+              color: Colors.red,
+              // borderRadius: BorderRadius.circular(10),
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.black,
+                  width: 2,
+                ),
+                  top: BorderSide(
+                  color: Colors.blue,
+                  width: 2,
+                )
+              )
+              // shape: BoxShape.circle
+            ),
+          ),
+
+      ],
+    );
+  }
+}
+
+
