@@ -78,8 +78,12 @@ class ProductItemBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 100,
+    return Container(
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.grey.withAlpha(100),
+        borderRadius: BorderRadius.circular(10)
+      ),
       child: Row(
         children:
         [
@@ -93,7 +97,7 @@ class ProductItemBuilder extends StatelessWidget {
               )
             ),
           ),
-          SizedBox(width: 20,),
+          SizedBox(width: 10,),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,11 +108,23 @@ class ProductItemBuilder extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children:
                   [
-                    Text('Product Name'),
-                    Text('50\$'),
+                    Expanded(child: Text('Product Name',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 17
+                    ),)),
+                    Text('50\$', style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                      color: Colors.red
+                    ),),
                   ],
                 ),
-                Text('Description'),
+                SizedBox(height: 20,),
+                Text('Description',  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12
+                ),),
               ],
             ),
           )
