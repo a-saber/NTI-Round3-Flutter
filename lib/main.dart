@@ -52,36 +52,74 @@ class HomeView extends StatelessWidget {
         ],
 
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children:
-            [
-              Text('Products', style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25
-              ),),
-              SizedBox(height: 20,),
-              SizedBox(
-                height: 200,
-                child: ListView.builder(
-                  itemBuilder: (context, int index)=> ProductItemBuilder(),
-                  itemCount: 10,
-                ),
+      body: SingleChildScrollView(
+        child: Column(
+          children:
+          [
+            SizedBox(
+              height: 150,
+              child: ListView.builder(
+                itemBuilder: ( BuildContext context, int index)=> ProductHorizontalItem(),
+                itemCount: 10,
+                scrollDirection: Axis.horizontal,
               ),
-              SizedBox(height: 800,),
-            ],
-          ),
+            ),
+            SizedBox(height: 50,),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.all(8),
+                itemCount: 10,
+                itemBuilder: (context, index)=> ProductVerticalItemBuilder())
+          ],
         ),
       )
     );
   }
 }
 
-class ProductItemBuilder extends StatelessWidget {
-  const ProductItemBuilder({super.key});
+class ProductHorizontalItem extends StatelessWidget {
+  const ProductHorizontalItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        children:
+        [
+          Container(
+            height: 100,
+            width: 100,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: NetworkImage('https://septemberfarmcheese.b-cdn.net/wp-content/uploads/Blogs/Homemade-Pizza/homemade-pizza-monterey-jack-cheese.jpg'),
+                fit: BoxFit.cover
+              )
+            ),
+          ),
+          SizedBox(height: 5,),
+          Row(
+            children:
+            [
+              Text('Product Name'),
+              SizedBox(width: 5,),
+              CircleAvatar(
+                backgroundColor: Colors.green,
+                radius: 5,
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+
+class ProductVerticalItemBuilder extends StatelessWidget {
+  const ProductVerticalItemBuilder({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +137,7 @@ class ProductItemBuilder extends StatelessWidget {
           Container(
             height: 100, width: 100,
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
+              borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
                 image: NetworkImage('https://septemberfarmcheese.b-cdn.net/wp-content/uploads/Blogs/Homemade-Pizza/homemade-pizza-monterey-jack-cheese.jpg'),
                 fit: BoxFit.cover
