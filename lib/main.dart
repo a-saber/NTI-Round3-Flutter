@@ -52,11 +52,10 @@ class HomeView extends StatelessWidget {
         ],
 
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children:
-          [
-            SizedBox(
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: SizedBox(
               height: 150,
               child: ListView.builder(
                 itemBuilder: ( BuildContext context, int index)=> ProductHorizontalItem(),
@@ -64,15 +63,18 @@ class HomeView extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
               ),
             ),
-            SizedBox(height: 50,),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.all(8),
-                itemCount: 10,
-                itemBuilder: (context, index)=> ProductVerticalItemBuilder())
-          ],
-        ),
+          ),
+          SliverToBoxAdapter(child: SizedBox(height: 50,)),
+          SliverList.builder(
+            itemCount: 10,
+            itemBuilder: (context, index)=> ProductVerticalItemBuilder()
+          ),
+          // SliverList(
+          //   delegate: SliverChildBuilderDelegate(
+          //       (context, index)=> ProductVerticalItemBuilder()
+          //   )
+          // )
+        ],
       )
     );
   }
