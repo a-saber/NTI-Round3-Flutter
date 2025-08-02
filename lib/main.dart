@@ -7,14 +7,48 @@ void main()
 
 class MyApp extends StatelessWidget
 {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Cairo'
+      ),
       debugShowCheckedModeBanner: false,
-      home: HomeView(),
+      home: TestView(),
     );
   }
 }
+
+class TestView extends StatelessWidget {
+  const TestView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Image.asset('assets/test.jpg'),
+          Text('Hello World',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+          ),
+          ),
+          Text('Hello World',
+          style: TextStyle(
+            fontSize: 20,
+              fontWeight: FontWeight.bold
+            // fontFamily: 'Cairo'
+          ),
+          )
+        ],
+      )
+    );
+  }
+}
+
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
