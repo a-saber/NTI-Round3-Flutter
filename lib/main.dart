@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Cairo'),
       debugShowCheckedModeBanner: false,
-      home: TestView(),
+      home: TestImageView(),
     );
   }
 }
@@ -26,23 +26,65 @@ class RegisterViewState extends State<RegisterView>
 {
   @override
   Widget build(BuildContext context) {
+    String x = 'ahmed';
     bool checkBoxValue = false;
     return Scaffold(
       appBar: AppBar(),
       body: Column(
         children:
         [
-          Checkbox(value: checkBoxValue, onChanged: (bool? value){
+          Text(x),
+          ElevatedButton(onPressed: () {
             setState(() {
-              checkBoxValue =  value?? checkBoxValue;
+              x = 'ali';
             });
-            print(checkBoxValue);
-          })
+            print(x);
+
+          }, child: Text('Change to Ali'))
+          // Checkbox(value: checkBoxValue, onChanged: (bool? value){
+          //   setState(() {
+          //     checkBoxValue =  value?? checkBoxValue;
+          //   });
+          //   print(checkBoxValue);
+          // })
         ],
       ),
     );
   }
 
+}
+class TestImageView extends StatelessWidget {
+  const TestImageView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox.expand(
+            child: Image.asset('assets/test.jpg',
+              fit: BoxFit.cover,),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Hello',
+              style: TextStyle(
+                fontSize: 40,
+                color: Colors.white
+              ),),
+              Text('Ahmed',
+              style: TextStyle(
+                fontSize: 40,
+                color: Colors.white
+              ),),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class TestView extends StatefulWidget {
@@ -173,8 +215,10 @@ class _TestViewState extends State<TestView> {
                 print(value);
               },
             ),
-
-            SizedBox(height: 20,),
+            // Switch(value: value, onChanged: onChanged),
+            // SwitchListTile(value: value, onChanged: onChanged),
+            // CheckboxListTile(value: value, onChanged: onChanged)
+            // SizedBox(height: 20,),
             ElevatedButton(
               onPressed: () {
                 print(formKey.currentState!.validate());
