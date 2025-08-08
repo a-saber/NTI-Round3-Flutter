@@ -60,32 +60,77 @@ class TestImageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        alignment: Alignment.center,
+        alignment: Alignment.bottomCenter,
         children: [
           SizedBox.expand(
             child: Image.asset('assets/test.jpg',
               fit: BoxFit.cover,),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Hello',
-              style: TextStyle(
-                fontSize: 40,
-                color: Colors.white
-              ),),
-              Text('Ahmed',
-              style: TextStyle(
-                fontSize: 40,
-                color: Colors.white
-              ),),
-            ],
-          ),
+          Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors:
+                [
+                  Colors.black.withAlpha(180),
+                  Colors.black.withAlpha(0),
+                ] )
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text('Hello',
+                  style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.white
+                  ),),
+                Text('Ahmed',
+                  style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.white
+                  ),),
+                DefaultBTN(
+                  text: 'Register',
+                ),
+                DefaultBTN(
+                  text: 'Login',
+                ),
+               ],
+            ),
+          )
         ],
       ),
     );
   }
 }
+class DefaultBTN extends StatelessWidget {
+  const DefaultBTN({super.key, required this.text});
+
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+                side: BorderSide(
+                  color: Colors.red,
+                  width: 2
+
+                )
+              )
+            ),
+            onPressed: (){}, child: Text(text)
+        )
+    );
+  }
+}
+
 
 class TestView extends StatefulWidget {
   TestView({super.key});
