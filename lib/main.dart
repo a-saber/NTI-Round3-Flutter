@@ -19,12 +19,14 @@ class MyApp extends StatelessWidget {
 
 class TestView extends StatelessWidget {
   TestView({super.key});
-
+  TextEditingController email = TextEditingController();
   Map<String, String> countriesCodes = {
     'Egypt': '+20',
     'KSA': '+966',
     'UAE': '+971'
   };
+  var formKey = GlobalKey<FormState>();
+
 
   // List<String> countries = [
   //   'Egypt',
@@ -36,92 +38,129 @@ class TestView extends StatelessWidget {
     return Scaffold(
         body: Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          Image.asset('assets/test.jpg'),
-          Text(
-            'Hello World',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            'Hello World',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold
-                // fontFamily: 'Cairo'
-                ),
-          ),
-          TextFormField(
-            // initialValue: 'ahmed',
-            keyboardType: TextInputType.name,
-            style: TextStyle(color: Colors.green),
-            // obscureText: true,
-            // obscuringCharacter: '*',
-            onTap: () {
-              print('field pressed');
-              // showTimePicker(
-              //   context: context,
-              //   initialTime: TimeOfDay. now()
-              // );
-            },
-            onChanged: (String value) {
-              print(value);
-            },
-            // enabled: false,
-            // readOnly: true,
-            cursorColor: Colors.blue,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.title),
-              // prefix: Icon(Icons.title),
-              suffixIcon: IconButton(
-                  onPressed: () {
-                    print('icon pressed');
-                  },
-                  icon: Icon(Icons.lock)),
-              // suffix: Icon(Icons.lock),
-              // suffix: ,
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.blue)),
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.blue)),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.blue)),
-              disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(0),
-                  borderSide: BorderSide(color: Colors.black)),
-              // focusedBorder: UnderlineInputBorder(),
-              labelText: 'Date',
-              hintText: 'Enter Your Name',
+      child: Form(
+        key: formKey,
+        child: Column(
+          children: [
+            Image.asset('assets/test.jpg'),
+            Text(
+              'Hello World',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-          ),
-          DropdownButtonFormField(
-            items: countriesCodes
-                .map((String countryName, countryCode) =>
-                  MapEntry(
-                    countryName,
-                    DropdownMenuItem(
-                      value: countryCode,
-                      child: Row(
-                        children: [
-                          Icon(Icons.flag),
-                          Text('hi'),
-                          Text(countryName),
-                          Text(countryCode),
-                        ],
-                      ),
+            Text(
+              'Hello World',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold
+                  // fontFamily: 'Cairo'
+                  ),
+            ),
+            TextFormField(
+              controller: email,
+              validator: (String? value){ // regex
+                if(value != null && value.isNotEmpty){
+                  return null;
+                }
+                return 'field is required';
+              },
+              // initialValue: 'ahmed',
+              keyboardType: TextInputType.name,
+              style: TextStyle(color: Colors.green),
+              // obscureText: true,
+              // obscuringCharacter: '*',
+              onTap: () {
+                print('field pressed');
+                // showTimePicker(
+                //   context: context,
+                //   initialTime: TimeOfDay. now()
+                // );
+              },
+              // onChanged: (String value) {
+              //   print(value);
+              // },
+              // enabled: false,
+              // readOnly: true,
+              cursorColor: Colors.blue,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.title),
+                // prefix: Icon(Icons.title),
+                suffixIcon: IconButton(
+                    onPressed: () {
+                      print('icon pressed');
+                    },
+                    icon: Icon(Icons.lock)),
+                // suffix: Icon(Icons.lock),
+                // suffix: ,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.blue)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.blue)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.blue)),
+                disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(0),
+                    borderSide: BorderSide(color: Colors.black)),
+                // focusedBorder: UnderlineInputBorder(),
+                focusedErrorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green),
+                ),
+                errorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                ),
+
+                labelText: 'Date',
+                hintText: 'Enter Your Name',
+              ),
+            ),
+            DropdownButtonFormField(
+              items: countriesCodes
+                  .map((String countryName, countryCode) =>
+                    MapEntry(
+                      countryName,
+                      DropdownMenuItem(
+                        value: countryCode,
+                        child: Row(
+                          children: [
+                            Icon(Icons.flag),
+                            Text('hi'),
+                            Text(countryName),
+                            Text(countryCode),
+                          ],
+                        ),
+                      )
                     )
                   )
+                  .values
+                  .toList(),
+              onChanged: (value) {
+                print(value);
+              },
+            ),
+            SizedBox(height: 20,),
+            ElevatedButton(
+              onPressed: () {
+                print(formKey.currentState!.validate());
+                onPressed(email.text);
+              },
+              child: Text('Press'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)
                 )
-                .values
-                .toList(),
-            onChanged: (value) {
-              print(value);
-            },
-          )
-        ],
+
+              ),
+            )
+          ],
+        ),
       ),
     ));
+  }
+
+  void onPressed(String value) {
+    print('button pressed: $value');
   }
 }
 
