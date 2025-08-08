@@ -16,23 +16,56 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+class RegisterView extends StatefulWidget{
+  const RegisterView({super.key});
 
-class TestView extends StatelessWidget {
+  @override
+  State<StatefulWidget> createState() => RegisterViewState();
+}
+class RegisterViewState extends State<RegisterView>
+{
+  @override
+  Widget build(BuildContext context) {
+    bool checkBoxValue = false;
+    return Scaffold(
+      appBar: AppBar(),
+      body: Column(
+        children:
+        [
+          Checkbox(value: checkBoxValue, onChanged: (bool? value){
+            setState(() {
+              checkBoxValue =  value?? checkBoxValue;
+            });
+            print(checkBoxValue);
+          })
+        ],
+      ),
+    );
+  }
+
+}
+
+class TestView extends StatefulWidget {
   TestView({super.key});
+
+  @override
+  State<TestView> createState() => _TestViewState();
+}
+
+class _TestViewState extends State<TestView> {
   TextEditingController email = TextEditingController();
+
+  String? dropDownValue ;
+
   Map<String, String> countriesCodes = {
     'Egypt': '+20',
     'KSA': '+966',
     'UAE': '+971'
   };
+
   var formKey = GlobalKey<FormState>();
 
-
   // List<String> countries = [
-  //   'Egypt',
-  //   'KSA',
-  //   'UAE'
-  // ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +97,7 @@ class TestView extends StatelessWidget {
               // initialValue: 'ahmed',
               keyboardType: TextInputType.name,
               style: TextStyle(color: Colors.green),
-              // obscureText: true,
+              obscureText: true,
               // obscuringCharacter: '*',
               onTap: () {
                 print('field pressed');
@@ -73,9 +106,9 @@ class TestView extends StatelessWidget {
                 //   initialTime: TimeOfDay. now()
                 // );
               },
-              // onChanged: (String value) {
-              //   print(value);
-              // },
+              onChanged: (String value) {
+                print(value);
+              },
               // enabled: false,
               // readOnly: true,
               cursorColor: Colors.blue,
@@ -134,14 +167,22 @@ class TestView extends StatelessWidget {
                   .values
                   .toList(),
               onChanged: (value) {
+                // setState(() {
+                  dropDownValue = value;
+                // });
                 print(value);
               },
             ),
+
             SizedBox(height: 20,),
             ElevatedButton(
               onPressed: () {
                 print(formKey.currentState!.validate());
                 onPressed(email.text);
+                setState(() {
+
+                });
+
               },
               child: Text('Press'),
               style: ElevatedButton.styleFrom(
@@ -152,6 +193,14 @@ class TestView extends StatelessWidget {
                 )
 
               ),
+            ),
+            SizedBox(height: 20,),
+            Column(
+              children:
+              [
+                Text('Form Field Value: ${email.text}'),
+                Text('Dropdown Value: $dropDownValue'),
+              ],
             )
           ],
         ),
