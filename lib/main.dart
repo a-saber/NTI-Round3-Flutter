@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/utils/app_colors.dart';
 import 'features/auth/views/login_view.dart';
+import 'features/auth/views/register_view.dart';
 
 
 void main()
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget
           scaffoldBackgroundColor: AppColors.background,
           fontFamily: 'Lexend_Deca'
         ),
-        home: LoginView(),
+        home: RegisterView(),
       ),
     );
   }
