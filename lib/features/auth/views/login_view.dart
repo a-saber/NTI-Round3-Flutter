@@ -11,6 +11,7 @@ import 'package:flutter_tutorial/core/widgets/custom_text_form_field.dart';
 import 'package:flutter_tutorial/features/auth/cubit/login_cubit/login_cubit.dart';
 import 'package:flutter_tutorial/features/auth/cubit/login_cubit/login_state.dart';
 
+import 'register_view.dart';
 import 'widgets/custom_auth_image.dart';
 import 'widgets/custom_q_text.dart';
 
@@ -67,7 +68,9 @@ class LoginView extends StatelessWidget {
                             text: 'Don\'t have an account?',
                           ),
                           SizedBox(width: 8.w,),
-                          CustomTextBtn(text: 'Login', onPressed: (){})
+                          CustomTextBtn(text: 'Register', onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterView(),));
+                          })
 
                         ],
                       )

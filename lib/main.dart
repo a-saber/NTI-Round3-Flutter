@@ -4,11 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/utils/app_colors.dart';
 import 'features/auth/views/login_view.dart';
-import 'features/auth/views/register_view.dart';
 
 
-void main()
-{
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -27,7 +31,7 @@ class MyApp extends StatelessWidget
           scaffoldBackgroundColor: AppColors.background,
           fontFamily: 'Lexend_Deca'
         ),
-        home: RegisterView(),
+        home: LoginView(),
       ),
     );
   }

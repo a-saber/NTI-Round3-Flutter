@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tutorial/features/auth/cubit/login_cubit/login_state.dart';
 import 'package:flutter_tutorial/features/auth/data/models/user_model.dart';
-import 'package:flutter_tutorial/features/auth/data/repo/auth_repo_imp.dart';
+import 'package:flutter_tutorial/features/auth/data/repo/auth_repo.dart';
 
 class LoginCubit extends Cubit<LoginState>
 {
@@ -15,10 +15,10 @@ class LoginCubit extends Cubit<LoginState>
   void changePasswordVisibility()
   {
     passwordSecure = !passwordSecure;
-    emit(ChangePasswordState());
+    emit(ChangePasswordVisibilityState());
   }
 
-  AuthRepoImp repo = AuthRepoImp();
+  AuthRepo repo = AuthRepo();
   void login()async
   {
     // if formKey.currentState?.validate()
