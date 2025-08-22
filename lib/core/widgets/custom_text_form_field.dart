@@ -6,16 +6,18 @@ import 'package:flutter_tutorial/core/utils/app_text_styles.dart';
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({super.key, required this.controller,
     required this.prefixIcon, this.suffixIcon, required this.hintText,
-    this.obscureText = false});
+    this.obscureText = false, this.validator});
 
   final TextEditingController controller ;
   final Widget prefixIcon;
   final Widget? suffixIcon;
   final String hintText;
   final bool obscureText;
+  final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: validator,
       controller: controller,
       style: TextStyle(
         color: AppColors.black,

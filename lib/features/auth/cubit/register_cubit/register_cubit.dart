@@ -13,6 +13,7 @@ class RegisterCubit extends Cubit<RegisterState>
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var confirmPasswordController = TextEditingController();
+  var formKey = GlobalKey<FormState>();
   bool passwordSecure = true;
   bool confirmPasswordSecure = true;
 
@@ -29,21 +30,19 @@ class RegisterCubit extends Cubit<RegisterState>
 
   onRegisterPressed()async
   {
+    if(!formKey.currentState!.validate())
+    {
+      return;
+    }
     emit(RegisterLoading());
-    AuthRepo auth = AuthRepo();
-    bool result = await auth.register(
-        name: nameController.text,
+    AuthRepo repo = AuthRepo();
+    bool result = await repo.register(name: nameController.text,
         email: emailController.text,
         password: passwordController.text
     );
-    if(result){
-      emit(RegisterSuccess());
-    }
-    else
-    {
-      emit(RegisterError(error: 'An error occurred'));
-    }
-
-
+    emit(result?
+      RegisterSuccess():
+      RegisterError(error: 'Error in register')
+    );
   }
 }

@@ -18,7 +18,7 @@ class LoginCubit extends Cubit<LoginState>
     emit(ChangePasswordVisibilityState());
   }
 
-  AuthRepo repo = AuthRepo();
+  final AuthRepo repo = AuthRepo();
   void login()async
   {
     // if formKey.currentState?.validate()

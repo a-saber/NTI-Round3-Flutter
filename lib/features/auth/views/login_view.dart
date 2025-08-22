@@ -43,21 +43,28 @@ class LoginView extends StatelessWidget {
                         hintText: 'username',
                       ),
                       SizedBox(height: 10.h,),
-                      BlocBuilder<LoginCubit, LoginState>(
-                        builder: (context, state)=> CustomTextFormField(
-                          controller: LoginCubit.get(context).passwordController,
-                          prefixIcon: IconButton(
-                              onPressed:null,
-                              icon: CustomSvg(path: AppAssets.key)
-                          ),
-                          hintText: 'password',
-                          obscureText: LoginCubit.get(context).passwordSecure,
-                          suffixIcon: IconButton(
-                              onPressed:  LoginCubit.get(context).changePasswordVisibility,
-                              icon: CustomSvg(path: LoginCubit.get(context).passwordSecure? AppAssets.lockIcon : AppAssets.unlockIcon)
-                          ),
+                    BlocConsumer<LoginCubit, LoginState>(
+                      listener: (context, state) {
+                        if (state is ChangePasswordVisibilityState) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text('Password Visibility Changed')));
+                        }
+                      },
+                      builder:  (context, state)=> CustomTextFormField(
+                        controller: LoginCubit.get(context).passwordController,
+                        prefixIcon: IconButton(
+                            onPressed:null,
+                            icon: CustomSvg(path: AppAssets.key)
+                        ),
+                        hintText: 'password',
+                        obscureText: LoginCubit.get(context).passwordSecure,
+                        suffixIcon: IconButton(
+                            onPressed:  LoginCubit.get(context).changePasswordVisibility,
+                            icon: CustomSvg(path: LoginCubit.get(context).passwordSecure? AppAssets.lockIcon : AppAssets.unlockIcon)
                         ),
                       ),
+                    ),
+
                       SizedBox(height: 23.h,),
                       CustomBtn(text: 'Login', onPressed: (){}),
                       Row(
