@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tutorial/core/helper/app_validator.dart';
+import 'package:flutter_tutorial/core/helper/my_navigator.dart';
 import 'package:flutter_tutorial/core/utils/app_assets.dart';
 import 'package:flutter_tutorial/core/utils/app_paddings.dart';
 import 'package:flutter_tutorial/core/widgets/custom_btn.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_tutorial/core/widgets/custom_text_btn.dart';
 import 'package:flutter_tutorial/core/widgets/custom_text_form_field.dart';
 import 'package:flutter_tutorial/features/auth/cubit/register_cubit/register_cubit.dart';
 import 'package:flutter_tutorial/features/auth/cubit/register_cubit/register_state.dart';
+import '../../home/views/home_view.dart';
 import 'login_view.dart';
 import 'widgets/custom_auth_image.dart';
 import 'widgets/custom_q_text.dart';
@@ -27,7 +29,7 @@ class RegisterView extends StatelessWidget {
           {
             if(state is RegisterSuccess)
             {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => LoginView(),));
+              MyNavigator.goTo(context, HomeView(user: state.userModel,), type: NavigatorType.pushAndRemoveUntil);
             }
             else if( state is RegisterError)
             {

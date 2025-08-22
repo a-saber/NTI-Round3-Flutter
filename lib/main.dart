@@ -1,4 +1,5 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,6 +8,7 @@ import 'features/auth/views/login_view.dart';
 
 
 import 'package:firebase_core/firebase_core.dart';
+import 'features/home/views/home_view.dart';
 import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +16,15 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MyApp());
+  FirebaseAuth.instance
+      .authStateChanges()
+      .listen((User? user) {
+    if (user == null) {
+      print('User is currently signed out!');
+    } else {
+      print('User is signed in!');
+    }
+  });
 }
 
 
@@ -31,9 +42,10 @@ class MyApp extends StatelessWidget
           scaffoldBackgroundColor: AppColors.background,
           fontFamily: 'Lexend_Deca'
         ),
-        home: LoginView(),
+        home: FirebaseAuth.instance.currentUser == null ? const LoginView() : const HomeView(),
       ),
     );
   }
 }
+
 
