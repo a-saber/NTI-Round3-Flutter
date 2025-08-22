@@ -36,13 +36,13 @@ class RegisterCubit extends Cubit<RegisterState>
     }
     emit(RegisterLoading());
     AuthRepo repo = AuthRepo();
-    bool result = await repo.register(name: nameController.text,
+    var response = await repo.register(name: nameController.text,
         email: emailController.text,
         password: passwordController.text
     );
-    emit(result?
-      RegisterSuccess():
-      RegisterError(error: 'Error in register')
+    response.fold(
+            (String error)=> emit(RegisterError(error: error)),
+            (userModel)=> emit(RegisterSuccess(userModel: userModel))
     );
   }
 }

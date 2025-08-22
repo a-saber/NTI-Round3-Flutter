@@ -18,14 +18,21 @@ class LoginCubit extends Cubit<LoginState>
     emit(ChangePasswordVisibilityState());
   }
 
+  var formKey = GlobalKey<FormState>();
   final AuthRepo repo = AuthRepo();
   void login()async
   {
-    // if formKey.currentState?.validate()
-    UserModel user = await repo.login(
+    if(!formKey.currentState!.validate()) return;
+    emit(LoginLoading());
+    var loginResponse = await repo.login(
       email: usernameController.text,
       password: passwordController.text
     );
+    loginResponse.fold(
+        (String error)=> emit(LoginError(error: error)),
+        (userModel)=> emit(LoginSuccess(userModel: userModel))
+    );
+
   }
 
 
