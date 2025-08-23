@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_tutorial/core/helper/app_pop_up.dart';
 import 'package:flutter_tutorial/core/helper/app_validator.dart';
 import 'package:flutter_tutorial/core/helper/my_navigator.dart';
 import 'package:flutter_tutorial/core/utils/app_assets.dart';
@@ -31,6 +32,10 @@ class LoginView extends StatelessWidget {
             if(state is LoginSuccess)
             {
               MyNavigator.goTo(context, HomeView(user: state.userModel,), type: NavigatorType.pushAndRemoveUntil);
+            }
+            else if(state is LoginError)
+            {
+              AppPopUp.showSnackBar(state.error, context);
             }
           },
           builder: (context, state) {
