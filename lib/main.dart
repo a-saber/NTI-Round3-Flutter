@@ -42,7 +42,8 @@ class MyApp extends StatelessWidget
           scaffoldBackgroundColor: AppColors.background,
           fontFamily: 'Lexend_Deca'
         ),
-        home: FirebaseAuth.instance.currentUser == null ? const LoginView() : const HomeView(),
+        // home: FirebaseAuth.instance.currentUser == null ? const LoginView() : const HomeView(),
+        home: FirebaseAuth.instance.currentUser == null ? const LoginView() : const HomeStreamView(),
       ),
     );
   }
