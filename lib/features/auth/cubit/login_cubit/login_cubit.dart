@@ -28,6 +28,7 @@ class LoginCubit extends Cubit<LoginState>
       email: usernameController.text,
       password: passwordController.text
     );
+
     loginResponse.fold(
         (String error)=> emit(LoginError(error: error)),
         (userModel)=> emit(LoginSuccess(userModel: userModel))
