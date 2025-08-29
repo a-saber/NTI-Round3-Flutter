@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_tutorial/features/news/views/news_view.dart';
 
 import 'core/utils/app_colors.dart';
 import 'features/auth/views/login_view.dart';
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget
           fontFamily: 'Lexend_Deca'
         ),
         // home: FirebaseAuth.instance.currentUser == null ? const LoginView() : const HomeView(),
-        home: FirebaseAuth.instance.currentUser == null ? const LoginView() : const HomeStreamView(),
+        // home: FirebaseAuth.instance.currentUser == null ? const LoginView() : const HomeStreamView(),
+        home: NewsView(),
       ),
     );
   }
