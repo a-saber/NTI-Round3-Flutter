@@ -10,6 +10,7 @@ import 'features/auth/views/login_view.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'features/home/views/home_view.dart';
+import 'features/my_location/views/location_view.dart';
 import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget
         ),
         // home: FirebaseAuth.instance.currentUser == null ? const LoginView() : const HomeView(),
         // home: FirebaseAuth.instance.currentUser == null ? const LoginView() : const HomeStreamView(),
-        home: NewsView(),
+        home: LocationView(),
       ),
     );
   }
