@@ -3,8 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tutorial/core/utils/app_assets.dart';
 
 class CustomAuthImage extends StatelessWidget {
-  const CustomAuthImage({super.key});
+  const CustomAuthImage({super.key, this.image = const AssetImage(AppAssets.flag)});
 
+  final ImageProvider image;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -12,7 +13,7 @@ class CustomAuthImage extends StatelessWidget {
       height: 298.h,
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(AppAssets.flag),
+              image: image,
               fit: BoxFit.cover
           ),
           borderRadius: BorderRadius.only(

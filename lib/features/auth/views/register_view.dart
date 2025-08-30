@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +12,7 @@ import 'package:flutter_tutorial/core/widgets/custom_btn.dart';
 import 'package:flutter_tutorial/core/widgets/custom_svg.dart';
 import 'package:flutter_tutorial/core/widgets/custom_text_btn.dart';
 import 'package:flutter_tutorial/core/widgets/custom_text_form_field.dart';
+import 'package:flutter_tutorial/core/widgets/image_manager/image_manager_view.dart';
 import 'package:flutter_tutorial/features/auth/cubit/register_cubit/register_cubit.dart';
 import 'package:flutter_tutorial/features/auth/cubit/register_cubit/register_state.dart';
 import '../../home/views/home_view.dart';
@@ -44,7 +47,15 @@ class RegisterView extends StatelessWidget {
               child: Column(
                 children:
                 [
-                  CustomAuthImage(),
+
+                  // CustomAuthImage(),
+                  ImageManagerView(
+                    onImagePicked: (image)=> RegisterCubit.get(context).image = image,
+                    imageBuilder:(image){
+                      return CustomAuthImage(image: FileImage(File(image.path)),);
+                    },
+                    defaultBuilder: CustomAuthImage(),
+                  ),
                   SizedBox(height: 23.h,),
                   Padding(
                     padding: AppPaddings.horizontalPadding,

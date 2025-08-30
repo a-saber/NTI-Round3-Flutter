@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tutorial/features/auth/data/repo/auth_repo.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'register_state.dart';
 
@@ -9,6 +10,7 @@ class RegisterCubit extends Cubit<RegisterState>
   RegisterCubit(): super(RegisterInitial());
   static RegisterCubit get(context) => BlocProvider.of(context);
 
+  XFile? image;
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();

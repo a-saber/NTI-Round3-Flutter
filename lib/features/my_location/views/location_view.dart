@@ -25,12 +25,21 @@ class LocationView extends StatelessWidget {
             }
             else if(state is LocationSuccess)
             {
-              return GoogleMap(
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(state.position.latitude, state.position.longitude),
-                  zoom: 5,
-                ),
-                markers: LocationCubit.get(context).markers,
+              return Column(
+                children:
+                [
+                  Text('${state.position.latitude} , ${state.position.longitude}'),
+                  SizedBox(height: 20,),
+                  Expanded(
+                    child: GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(state.position.latitude, state.position.longitude),
+                        zoom: 5,
+                      ),
+                      markers: LocationCubit.get(context).markers,
+                    ),
+                  ),
+                ],
               );
             }
             else if(state is LocationError)
