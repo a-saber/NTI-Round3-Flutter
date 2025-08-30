@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../cubit/location_cubit/location_cubit.dart';
 import '../cubit/location_cubit/location_state.dart';
@@ -24,7 +25,13 @@ class LocationView extends StatelessWidget {
             }
             else if(state is LocationSuccess)
             {
-              return Center(child: Text('${state.position.latitude}\n ${state.position.longitude}'));
+              return GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(state.position.latitude, state.position.longitude),
+                  zoom: 5,
+                ),
+                markers: LocationCubit.get(context).markers,
+              );
             }
             else if(state is LocationError)
             {
