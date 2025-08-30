@@ -14,6 +14,17 @@ class LocationCubit extends Cubit<LocationState>
 
   Set<Marker> markers = {};
 
+  changeLocation(LatLng newLocation)
+  {
+    markers.clear();
+    markers.add(
+      Marker(
+        markerId: MarkerId('New Location'),
+        position: newLocation
+      )
+    );
+    emit(LocationSuccess( newLocation));
+  }
   getLocation()async
   {
     LocationRepo repo = LocationRepo();
@@ -22,13 +33,14 @@ class LocationCubit extends Cubit<LocationState>
     response.fold(
         (String error) => emit(LocationError( error)),
         (position) {
+          LatLng latLng = LatLng(position.latitude, position.longitude);
           markers.add(
             Marker(
               markerId: MarkerId('current location'),
-              position: LatLng(position.latitude, position.longitude)
+              position: latLng
             )
           );
-          emit(LocationSuccess( position));
+          emit(LocationSuccess(latLng));
         }
     );
   }

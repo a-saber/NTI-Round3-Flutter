@@ -28,14 +28,27 @@ class LocationView extends StatelessWidget {
               return Column(
                 children:
                 [
-                  Text('${state.position.latitude} , ${state.position.longitude}'),
+                  Text('${state.latLng.latitude} , ${state.latLng.longitude}'),
+                  SizedBox(height: 20,),
+                  // ElevatedButton(onPressed: , child: Text('Current')),
                   SizedBox(height: 20,),
                   Expanded(
                     child: GoogleMap(
+                      polylines: {
+                        Polyline(
+                          polylineId: PolylineId('1'),
+                          points: [
+                            LatLng(state.latLng.latitude, state.latLng.longitude),
+                            LatLng(state.latLng.latitude+0.2, state.latLng.longitude+0.2),
+                          ]
+                        )
+                      },
+                      onTap: LocationCubit.get(context).changeLocation,
                       initialCameraPosition: CameraPosition(
-                        target: LatLng(state.position.latitude, state.position.longitude),
+                        target: LatLng(state.latLng.latitude, state.latLng.longitude),
                         zoom: 5,
                       ),
+                      myLocationEnabled: true,
                       markers: LocationCubit.get(context).markers,
                     ),
                   ),
