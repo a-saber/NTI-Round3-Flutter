@@ -3,6 +3,8 @@ import 'package:flutter_tutorial/features/auth/data/models/user_model.dart';
 import 'package:flutter_tutorial/features/home/cubit/user_cubit/user_state.dart';
 import 'package:flutter_tutorial/features/home/data/repo/home_repo.dart';
 
+import '../../../auth/data/models/login_response_model.dart';
+
 class UserCubit extends Cubit<UserState>
 {
   UserCubit(): super(UserInitial());

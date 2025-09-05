@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tutorial/core/helper/my_navigator.dart';
 import 'package:flutter_tutorial/features/auth/data/models/user_model.dart';
-import 'package:flutter_tutorial/features/auth/views/login_view.dart';
-import 'package:flutter_tutorial/features/home/cubit/tasks_cubit/tasks_cubit.dart';
+import 'package:flutter_tutorial/features/home/cubit/menu_cubit/menu_cubit.dart';
+import 'package:flutter_tutorial/features/home/cubit/menu_cubit/menu_state.dart';
 import 'package:flutter_tutorial/features/home/cubit/user_cubit/user_cubit.dart';
 import 'package:flutter_tutorial/features/home/cubit/user_cubit/user_state.dart';
-import 'package:flutter_tutorial/features/home/data/models/task_model.dart';
 
-import '../cubit/tasks_cubit/tasks_state.dart';
+import '../../auth/data/models/login_response_model.dart';
+import '../../auth/views/login_view.dart';
+import 'category_products_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key, this.user});
@@ -35,7 +36,7 @@ class HomeView extends StatelessWidget {
               }
               else if(state is UserSuccess)
               {
-                return Text(state.user.email);
+                return Text(state.user.email??'');
               }
               else
               {
@@ -53,6 +54,88 @@ class HomeView extends StatelessWidget {
           ],
         ),
         body: BlocProvider(
+          create: (context) => MenuCubit()..getMenu(),
+          child: BlocBuilder<MenuCubit, MenuState>(
+              builder: (context, state)
+              {
+                if(state is MenuLoading)
+                {
+                  return Center(child: CircularProgressIndicator());
+                }
+                else if(state is MenuError)
+                {
+                  return Center(child: Text(state.error));
+                }
+                else if(state is MenuSuccess)
+                {
+                  return RefreshIndicator(
+                    onRefresh: ()async
+                    {
+                      MenuCubit.get(context).getMenu();
+                    },
+                    child: ListView.builder(
+                      itemBuilder: (context, index)=> InkWell(
+                        onTap: (){MyNavigator.goTo(context, CategoryProductsView(categoryModel: state.categories[index],));},
+                        child: Column(
+                          children:
+                          [
+                            Image.network(state.categories[index].imagePath??''),
+                            Text(state.categories[index].title??'-'),
+                            Text(state.categories[index].description??'-'),
+                          ],
+                        ),
+                      ),
+                      itemCount: state.categories.length,
+                    ),
+                  );
+                }
+                else {
+                  return SizedBox();
+                }
+              }
+          ),
+        ),
+      ),
+    );
+  }
+}
+// class HomeStreamView extends StatelessWidget {
+//   const HomeStreamView({super.key});
+//
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: StreamBuilder<QuerySnapshot>(
+//         stream: FirebaseFirestore.instance.collection('users')
+//             .doc(FirebaseAuth.instance.currentUser!.uid).collection('tasks')
+//             .snapshots(),
+//         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//           if (snapshot.hasError) {
+//             return Text('Something went wrong');
+//           }
+//
+//           if (snapshot.connectionState == ConnectionState.waiting) {
+//             return CircularProgressIndicator();
+//           }
+//
+//           return ListView(
+//             children: snapshot.data!.docs.map((DocumentSnapshot document) {
+//               TaskModel task = TaskModel.fromJson(document.data()! as Map<String, dynamic>);
+//               return ListTile(
+//                 title: Text(task.title??'-'),
+//                 subtitle: Text(task.description??'-'),
+//               );
+//             }).toList(),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+
+/*
+BlocProvider(
           create: (context) => TasksCubit()..getTasks(),
           child: BlocBuilder<TasksCubit, TasksState>(
             builder: (context, state)
@@ -89,42 +172,5 @@ class HomeView extends StatelessWidget {
               }
             }
           ),
-        ),
-      ),
-    );
-  }
-}
-class HomeStreamView extends StatelessWidget {
-  const HomeStreamView({super.key});
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('users')
-            .doc(FirebaseAuth.instance.currentUser!.uid).collection('tasks')
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Something went wrong');
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          }
-
-          return ListView(
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              TaskModel task = TaskModel.fromJson(document.data()! as Map<String, dynamic>);
-              return ListTile(
-                title: Text(task.title??'-'),
-                subtitle: Text(task.description??'-'),
-              );
-            }).toList(),
-          );
-        },
-      ),
-    );
-  }
-}
+        )
+ */

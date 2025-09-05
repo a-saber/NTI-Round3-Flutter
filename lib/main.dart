@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tutorial/features/auth/views/register_view.dart';
 import 'package:flutter_tutorial/features/news/views/news_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/utils/app_colors.dart';
 import 'features/auth/views/login_view.dart';
@@ -18,7 +19,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  var sharedPref = await SharedPreferences.getInstance();
+  var accessToken = sharedPref.getString('access_token');
+  runApp(MyApp(screen: accessToken != null ? HomeView(): LoginView(),));
   FirebaseAuth.instance
       .authStateChanges()
       .listen((User? user) {
@@ -33,7 +36,8 @@ void main() async {
 
 class MyApp extends StatelessWidget
 {
-  const MyApp({super.key});
+  final Widget screen;
+  const MyApp({super.key, required this.screen});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,7 @@ class MyApp extends StatelessWidget
         ),
         // home: FirebaseAuth.instance.currentUser == null ? const LoginView() : const HomeView(),
         // home: FirebaseAuth.instance.currentUser == null ? const LoginView() : const HomeStreamView(),
-        home: LoginView(),
+        home: screen,
       ),
     );
   }

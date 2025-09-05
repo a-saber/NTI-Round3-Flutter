@@ -1,3 +1,4 @@
+import '../../../auth/data/models/login_response_model.dart';
 import '../../../auth/data/models/user_model.dart';
 
 abstract class UserState{}

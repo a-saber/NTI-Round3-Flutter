@@ -1,4 +1,5 @@
-import 'package:flutter_tutorial/features/auth/data/models/user_model.dart';
+
+import 'package:flutter_tutorial/features/auth/data/models/login_response_model.dart';
 
 abstract class LoginState {}
 class InitialState extends LoginState{}
