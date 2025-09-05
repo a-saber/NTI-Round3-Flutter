@@ -12,6 +12,7 @@ class RegisterCubit extends Cubit<RegisterState>
 
   XFile? image;
   var nameController = TextEditingController();
+  var phoneController = TextEditingController();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var confirmPasswordController = TextEditingController();
@@ -38,13 +39,15 @@ class RegisterCubit extends Cubit<RegisterState>
     }
     emit(RegisterLoading());
     AuthRepo repo = AuthRepo();
-    var response = await repo.register(name: nameController.text,
+    var response = await repo.register(
+        phone: phoneController.text,
+        name: nameController.text,
         email: emailController.text,
         password: passwordController.text
     );
     response.fold(
             (String error)=> emit(RegisterError(error: error)),
-            (userModel)=> emit(RegisterSuccess(userModel: userModel))
+            (userModel)=> emit(RegisterSuccess())
     );
   }
 }

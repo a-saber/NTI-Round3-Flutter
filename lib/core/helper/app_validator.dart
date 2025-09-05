@@ -34,4 +34,23 @@ abstract class AppValidator
     }
     return null;
   }
+
+  static String? phoneValidator(String? value)
+  {
+    var regex = RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$');
+    if(!regex.hasMatch(value??""))
+    {
+      return 'Please enter valid phone number';
+    }
+    return null;
+  }
+
+  static String? requiredValidator(String? value)
+  {
+    if(value == null || value.isEmpty)
+    {
+      return 'Please enter value';
+    }
+    return null;
+  }
 }

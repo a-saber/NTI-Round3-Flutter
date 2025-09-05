@@ -14,7 +14,7 @@ class ApiHelper
 
   Dio dio = Dio(
       BaseOptions(
-        baseUrl: EndPoints.baseUrl,
+        baseUrl: EndPoints.ecoBaseUrl,
         connectTimeout: Duration(seconds: 10),
         receiveTimeout: Duration(seconds: 10),
       )

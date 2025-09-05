@@ -16,7 +16,7 @@ class ApiResponse {
   // Factory method to handle Dio responses
   factory ApiResponse.fromResponse(Response response) {
     return ApiResponse(
-      status: response.data["status"] =='ok' ,
+      status: response.data["status"] ==true ,
       statusCode: response.statusCode ?? 500,
       data: response.data,
       message: response.data["message"] ?? '',
