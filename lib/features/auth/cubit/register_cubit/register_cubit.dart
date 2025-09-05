@@ -43,7 +43,8 @@ class RegisterCubit extends Cubit<RegisterState>
         phone: phoneController.text,
         name: nameController.text,
         email: emailController.text,
-        password: passwordController.text
+        password: passwordController.text,
+      image: image
     );
     response.fold(
             (String error)=> emit(RegisterError(error: error)),

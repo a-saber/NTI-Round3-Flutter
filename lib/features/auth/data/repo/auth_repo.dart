@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_tutorial/core/network/api_helper.dart';
 import 'package:flutter_tutorial/core/network/api_response.dart';
@@ -43,14 +44,23 @@ class AuthRepo{
   })async
   {
     try {
+      final Map<String, dynamic> data = {
+        'name': name,
+        'email': email,
+        'password': password,
+        'phone': phone,
+      };
+
+      // If image exists, attach as file
+      if (image != null) {
+        data['image'] = await MultipartFile.fromFile(
+          image.path,
+          filename: image.name,
+        );
+      }
       var response = await apiHelper.postRequest(
         endPoint: EndPoints.register,
-        data: {
-          'name': name,
-          'email': email,
-          'password': password,
-          'phone': phone
-        }
+        data: data
       );
       if(response.status)
       {
